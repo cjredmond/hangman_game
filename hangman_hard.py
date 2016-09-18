@@ -1,6 +1,15 @@
 import random
+import sys
 with open("/usr/share/dict/words") as better_open_file:
     words = better_open_file.read().upper().split()
+
+
+def game_run():
+    game = input("Do you want to play again Y/n?   ")
+    if game == "n":
+        sys.exit()
+    return game
+
 
 easy_words = []
 med_words = []
@@ -15,19 +24,26 @@ for word in words:
     if len(word) > 10:
         hard_words.append(word)
 
-level = input("Please choose game level:  EASY--MEDIUM--HARD   ").upper()
-game = "y"
-while game == "y":
 
-    if level == "EASY":
-        chosen_word = easy_words[random.randint(0, len(easy_words)-1)]
-        length = len(chosen_word)
+game = ""
+while game != "q":
+
+
+    level = input("Please choose game level or 'Q' for quit:  EASY--MEDIUM--HARD   ").upper()
+
+
+    if level == "Q":
+        sys.exit()
     elif level == "MEDIUM":
         chosen_word = med_words[random.randint(0, len(med_words)-1)]
         length = len(chosen_word)
-    else:
+    elif level == "HARD":
         chosen_word = hard_words[random.randint(0, len(hard_words)-1)]
         length = len(chosen_word)
+    else:
+        chosen_word = easy_words[random.randint(0, len(easy_words)-1)]
+        length = len(chosen_word)
+
 
 
     print("The chosen word has {} letters".format(length))
@@ -46,9 +62,12 @@ while game == "y":
     upper_blank = ""
     player_guess = "hello"
 
-    while counter < 8 and upper_blank != chosen_word:
-
+    while counter < 8:
         upper_blank = "".join(blank_word)
+        if upper_blank == chosen_word:
+            print("win")
+            break
+
         print(upper_blank)
         print("These letters were already guessed: {}".format(bad_guesses))
         print("You have {} of 8 strikes".format(counter))
@@ -77,4 +96,6 @@ while game == "y":
                 print("You have {} of 8 strikes\n".format(counter))
                 bad_guesses.append(player_guess)
 
-    game = input("Do you want to play again Y/n?   ")
+    print("The word was  {} \n \n".format(chosen_word))
+
+    game_run()

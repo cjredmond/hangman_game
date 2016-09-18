@@ -1,14 +1,17 @@
 import random
-import sys
 
-with open("/usr/share/dict/words") as better_open_file:
+with open("sample.txt") as better_open_file:
     words = better_open_file.read().upper().split()
 
-chosen_word = words[random.randint(0, len(words)-1)]
+random_length = random.randint(6,8)
+word_bank = []
+for word in words:
+    if len(word) == random_length:
+        word_bank.append(word)
+print(word_bank)
+
+chosen_word = word_bank.pop(random.randint(0, len(word_bank)-1))
 length = len(chosen_word)
-# print(length)
-# print(words)
-# print(chosen_word)
 
 print("The chosen word has {} letters".format(length))
 
@@ -17,6 +20,8 @@ def make_underscores(word):
     for burn in range(0,len(word)):
         underscores.append("_")
     return underscores
+
+
 
 good_guesses =[]
 bad_guesses =[]
